@@ -44,6 +44,7 @@ class Blockchain:
             middle_index = (min_index + max_index) // 2
             if middle_index == account_id:
                 print(f'account value is: {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[middle_index]),"ether")}')
+                break
             elif middle_index > account_id:
                 max_index = middle_index - 1
             elif middle_index < account_id:

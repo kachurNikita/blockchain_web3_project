@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class BlockchainDB:
     transactions = {}
 
@@ -27,4 +26,10 @@ class BlockchainDB:
         self.conn.commit()
         self.conn.close()
         print('Record have been added successfully')
+
+    # def get_and_post_to_ui(self, table_name):
+    #     self.cursor.execute(f"SELECT * FROM {table_name}")
+    #     data = self.cursor.fetchone
+    #     return data
+
 

@@ -42,8 +42,6 @@ class Blockchain:
             if account == account_id:
                 print(f'account value is:'
                       f' {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[account_id]),"ether")}')
-            else:
-                print(f'There is no account with id {account_id}')
 
     # send transaction from one account to another
     def send_transaction(self, from_acc, private_key, to_acc, value, blockchain, blockchain_db):
@@ -71,7 +69,8 @@ class Blockchain:
         self.transactions_hash[tx_hash] = {
             'from': from_acc,
             'to': to_acc,
-            'value': tx['value']
+            'value': tx['value'],
+            'sender': sender_name
         }
         blockchain_db.add_record(tx_hash, from_acc, to_acc, value, 'transactions', sender_name)
         print('Transaction executed successfully!!!')
@@ -84,8 +83,13 @@ main_blockchain = Blockchain()
 main_blockchain.connect_to_blockchain(ganache_local_blockchain, 'Ganache')
 blockchain_db = BlockchainDB('blockchain.db')
 main_blockchain.get_balance(2)
+
 # blockchain_db.create_table('transactions', 'tx_hash', 'from', 'to', 'value', 'sender')
-# main_blockchain.send_transaction(address_from, address_from_private_key,
-#                                  address_to, 1,
-#                                  main_blockchain.blockchain, blockchain_db)
+
+main_blockchain.send_transaction(address_from,
+                                 address_from_private_key,
+                                 address_to, 1,
+                                 main_blockchain.blockchain,
+                                 blockchain_db)
+
 # main_blockchain.show_accounts_in_blockchain()

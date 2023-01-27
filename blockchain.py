@@ -88,8 +88,7 @@ class Blockchain:
 main_blockchain = Blockchain()
 main_blockchain.connect_to_blockchain(ganache_local_blockchain, 'Ganache')
 blockchain_db = BlockchainDB('blockchain.db')
-print(main_blockchain.get_balance(9)
-)
+main_blockchain.get_balance(1)
 # blockchain_db.create_table('transactions', 'tx_hash', 'from', 'to', 'value', 'sender')
 # main_blockchain.send_transaction(address_from, address_from_private_key,
 #                                  address_to, 1,

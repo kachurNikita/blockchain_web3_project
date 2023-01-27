@@ -50,6 +50,7 @@ class Blockchain:
     def send_transaction(self, from_acc, private_key, to_acc, value, blockchain, blockchain_db):
         while True:
             sender_name = input('Please provide your name: ')
+
             if sender_name:
                 break
 
@@ -84,7 +85,7 @@ main_blockchain = Blockchain()
 main_blockchain.connect_to_blockchain(ganache_local_blockchain, 'Ganache')
 blockchain_db = BlockchainDB('blockchain.db')
 # blockchain_db.create_table('transactions', 'tx_hash', 'from', 'to', 'value', 'sender')
-main_blockchain.send_transaction(address_from, address_from_private_key,
-                                 address_to, 1,
-                                 main_blockchain.blockchain, blockchain_db)
+# main_blockchain.send_transaction(address_from, address_from_private_key,
+#                                  address_to, 1,
+#                                  main_blockchain.blockchain, blockchain_db)
 main_blockchain.show_accounts_in_blockchain()

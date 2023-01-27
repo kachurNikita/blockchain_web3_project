@@ -17,10 +17,14 @@ class Blockchain:
 
     # create blockchain  connection
     def connect_to_blockchain(self, blockchain_url, blockchain_name):
+
+        # simple validation
         assert blockchain_name != '', 'Please provide blockchain name'
         assert blockchain_url != '', 'Please provide blockchain URL'
+
         self.blockchain = Web3(Web3.HTTPProvider(blockchain_url))
         self.blockchain_name = blockchain_name
+        self.accounts = self.blockchain.eth.accounts
         if self.blockchain.isConnected():
             print(f'{self.blockchain_name} blockchain is successfully connected!')
         else:
@@ -30,21 +34,21 @@ class Blockchain:
         print(f'You are now connected to {self.blockchain_name} blockchain!')
 
     def show_accounts_in_blockchain(self):
-        if self.blockchain_name == 'Ganache':
-            self.accounts = self.blockchain.eth.accounts
-            print(self.accounts)
-        else:
-            print(f'Please switch blockchain {self.blockchain_name} to "Ganache blockchain"')
+        self.accounts = self.blockchain.eth.accounts
+        print(self.accounts)
 
     def get_balance(self, account_id):
-        if self.accounts:
-            for account in range(len(self.accounts)):
-                if account == account_id:
-                    print(f'Current balance of account with index {account_id} is '
-                          f'{self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[account]),"ether")}'
-                          f' ethers')
-        else:
-            print('There are no available accounts')
+        min_index = 0
+        max_index = len(self.accounts) - 1
+        while min_index <= max_index:
+            middle_index = (min_index + max_index) // 2
+            if middle_index == account_id:
+                return f'account value is: {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[middle_index]),"ether")}'
+            elif middle_index > account_id:
+                max_index = middle_index - 1
+            elif middle_index < account_id:
+                min_index = middle_index + 1
+        return f'There is no account with id: {account_id}'
 
     # send transaction from one account to another
     def send_transaction(self, from_acc, private_key, to_acc, value, blockchain, blockchain_db):
@@ -84,8 +88,10 @@ class Blockchain:
 main_blockchain = Blockchain()
 main_blockchain.connect_to_blockchain(ganache_local_blockchain, 'Ganache')
 blockchain_db = BlockchainDB('blockchain.db')
+print(main_blockchain.get_balance(9)
+)
 # blockchain_db.create_table('transactions', 'tx_hash', 'from', 'to', 'value', 'sender')
 # main_blockchain.send_transaction(address_from, address_from_private_key,
 #                                  address_to, 1,
 #                                  main_blockchain.blockchain, blockchain_db)
-main_blockchain.show_accounts_in_blockchain()
+# main_blockchain.show_accounts_in_blockchain()

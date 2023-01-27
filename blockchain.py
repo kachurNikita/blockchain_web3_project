@@ -43,12 +43,12 @@ class Blockchain:
         while min_index <= max_index:
             middle_index = (min_index + max_index) // 2
             if middle_index == account_id:
-                return f'account value is: {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[middle_index]),"ether")}'
+                print(f'account value is: {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[middle_index]),"ether")}')
             elif middle_index > account_id:
                 max_index = middle_index - 1
             elif middle_index < account_id:
                 min_index = middle_index + 1
-        return f'There is no account with id: {account_id}'
+        print(f'There is no account with id: {account_id}')
 
     # send transaction from one account to another
     def send_transaction(self, from_acc, private_key, to_acc, value, blockchain, blockchain_db):

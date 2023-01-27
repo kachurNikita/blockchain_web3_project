@@ -38,18 +38,12 @@ class Blockchain:
         print(self.accounts)
 
     def get_balance(self, account_id):
-        min_index = 0
-        max_index = len(self.accounts) - 1
-        while min_index <= max_index:
-            middle_index = (min_index + max_index) // 2
-            if middle_index == account_id:
-                print(f'account value is: {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[middle_index]),"ether")}')
-                break
-            elif middle_index > account_id:
-                max_index = middle_index - 1
-            elif middle_index < account_id:
-                min_index = middle_index + 1
-        print(f'There is no account with id: {account_id}')
+        for account in range(len(self.accounts)):
+            if account == account_id:
+                print(f'account value is:'
+                      f' {self.blockchain.fromWei(self.blockchain.eth.getBalance(self.accounts[account_id]),"ether")}')
+            else:
+                print(f'There is no account with id {account_id}')
 
     # send transaction from one account to another
     def send_transaction(self, from_acc, private_key, to_acc, value, blockchain, blockchain_db):
@@ -89,7 +83,7 @@ class Blockchain:
 main_blockchain = Blockchain()
 main_blockchain.connect_to_blockchain(ganache_local_blockchain, 'Ganache')
 blockchain_db = BlockchainDB('blockchain.db')
-main_blockchain.get_balance(1)
+main_blockchain.get_balance(2)
 # blockchain_db.create_table('transactions', 'tx_hash', 'from', 'to', 'value', 'sender')
 # main_blockchain.send_transaction(address_from, address_from_private_key,
 #                                  address_to, 1,
